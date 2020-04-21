@@ -22,7 +22,9 @@ const routes = [
   },
   {
     path: '/',
-    name: 'layout',
+    // 命名路由 layout 有一个默认路由, 这个名字没有意义, 所以警告
+    // 正确的做法: 如果有默认的子路由, 就不要给父路由起名字
+    // name: 'layout',
     component: Layout,
     children: [
       {

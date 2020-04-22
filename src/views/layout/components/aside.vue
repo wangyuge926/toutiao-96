@@ -5,6 +5,7 @@
     text-color="#fff"
     active-text-color="#ffd04b"
     router
+    :collapse="isCollapse"
     >
     <div class="logo">
         <img src="./logo_admin.png" alt="">
@@ -44,9 +45,11 @@
 export default {
   name: 'AppAside',
   components: {},
-  props: {},
+  props: ['is-Collapse'],
   data () {
-    return {}
+    return {
+      // isCollapse: true
+    }
   },
   computed: {},
   watch: {},
@@ -59,6 +62,6 @@ export default {
 <style scoped lang="less" >
 .logo {
     height: 60px;
-    padding: 15px 0 0 20px;
+    padding: 15px;
 }
 </style>

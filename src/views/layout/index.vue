@@ -5,25 +5,7 @@
     </el-aside>
     <el-container>
       <el-header class="header">
-        <div>
-          <i class="el-icon-s-fold"></i>
-          <span>江苏传智播客科技教育有限公司</span>
-        </div>
-        <el-dropdown>
-          <div class="avatar-wrap">
-            <img class="avatar" src="http://toutiao.meiduo.site/FrvifflobfNNRM9V_ZBTI2ZaTH4n" alt="">
-            <span>用户昵称</span>
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </div>
-          <!-- <span>
-            下拉菜单
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span> -->
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人设置</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <app-header />
       </el-header>
       <el-main class="main">
         <!-- 子路由出口 -->
@@ -35,15 +17,16 @@
 
 <script>
 import AppAside from './components/aside'
+import AppHeader from './components/header'
+
 export default {
   name: 'LayoutIndex',
   components: {
-    AppAside
+    AppAside,
+    AppHeader
   },
   props: {},
-  data () {
-    return {}
-  },
+  data () {},
   computed: {},
   watch: {},
   created () {},
@@ -69,7 +52,7 @@ export default {
 }
 
 .header {
-  height: 60px;
+  // height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,16 +62,5 @@ export default {
 
 .main {
   background-color: #e9eef3;
-}
-
-.avatar-wrap {
-  display: flex;
-  align-items: center;
-  .avatar {
-    width:40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
 }
 </style>

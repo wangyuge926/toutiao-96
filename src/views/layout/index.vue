@@ -32,8 +32,14 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </div>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>设置</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item>
+              <i class="el-icon-setting"></i>
+              个人设置
+              </el-dropdown-item>
+            <el-dropdown-item>
+              <i class="el-icon-unlock"></i>
+              退出登录
+              </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>

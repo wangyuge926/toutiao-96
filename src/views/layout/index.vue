@@ -36,7 +36,10 @@
               <i class="el-icon-setting"></i>
               个人设置
               </el-dropdown-item>
-            <el-dropdown-item>
+              <!-- 组件默认是不识别原生事件的, 除非做了内部处理 -->
+            <el-dropdown-item
+            @click.native="onLogout"
+            >
               <i class="el-icon-unlock"></i>
               退出登录
               </el-dropdown-item>
@@ -80,6 +83,24 @@ export default {
     loadUserProfile () {
       getUserProfile().then(res => {
         this.user = res.data.data
+      })
+    },
+    onLogout () {
+      this.$confirm('确认退出吗？', '退出提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 把用户的登录状态清除
+        window.localStorage.removeItem('user')
+
+        // 跳转到登录页面
+        this.$router.push('/login')
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        })
       })
     }
   }

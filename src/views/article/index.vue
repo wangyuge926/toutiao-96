@@ -115,11 +115,18 @@
       <!-- /数据列表 -->
 
       <!-- 列表分页 -->
+      <!--
+        total 用来设置总数据的条数
+        它默认按照 10 条每页计算总页码
+        page-size :默认每页显示10条
+       -->
       <el-pagination
         layout="prev, pager, next"
         background
-        :total="1000">
-      </el-pagination>
+        :total="totalCount"
+        @current-change="onCurrentChange"
+        :page-size="pageSize"
+        />
       <!-- /列表分页 -->
     </el-card>
   </div>
@@ -151,24 +158,35 @@ export default {
         { status: 2, text: '审核通过', type: 'success' }, // 2
         { status: 3, text: '审核失败', type: 'warning' }, // 3
         { status: 4, text: '已删除', type: 'danger' } // 4
-      ]
+      ],
+      totalCount: 0, // 总数据条数
+      pageSize: 10 // 每页大小
     }
   },
   computed: {},
   watch: {},
   created () {
-    this.loadArticles()
+    this.loadArticles(1)
   },
   mounted () {},
   methods: {
-    loadArticles () {
-      getArticles().then(res => {
-        this.articles = res.data.data.results
+    loadArticles (page = 1) {
+      getArticles({
+        page,
+        per_page: this.pageSize
+      }).then(res => {
+        const { results, total_count: totalCount } = res.data.data
+        this.articles = results
+        this.totalCount = totalCount
       })
     },
 
     onSubmit () {
       console.log('submit!')
+    },
+
+    onCurrentChange (page) {
+      this.loadArticles(page)
     }
   }
 }

@@ -2,11 +2,26 @@
  * 基于 axios 封装的请求模块
  */
 import axios from 'axios'
+import JSONbig from 'json-bigint'
 
 // 创建一个 axios 实例, 说白了就是复制一个 axios
 // 我们通过这个实例去发请求, 把需要的配置配置给这个实例来
 const request = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/' // 请求的基础路径
+  baseURL: 'http://ttapi.research.itcast.cn/', // 请求的基础路径
+
+  // 定义后端返回的原始数据处理
+  // 参数 data 就是后端返回的原始数据 (未经处理的 JSON 格式)
+  transformResponse: [function (data) {
+    // console.log(data)
+
+    try {
+      // 如果转换成功, 直接把结果返回
+      return JSONbig.parse(data)
+    } catch (err) {
+      // 我们在这里把数据原封不动的直接返回给请求使用
+      return data
+    }
+  }]
 })
 
 // 请求拦截器

@@ -122,7 +122,7 @@
         <el-table-column
           label="操作">
           <!-- 如果需要自定义表格列模板，则把需要自定义的内容放到 template 里面 -->
-          <template>
+          <template slot-scope="scope">
             <el-button
               size="mini"
               circle
@@ -134,6 +134,7 @@
               type="danger"
               icon="el-icon-delete"
               circle
+              @click="onDeleteArticle(scope.row.id)"
             ></el-button>
           </template>
         </el-table-column>
@@ -152,6 +153,7 @@
         :total="totalCount"
         :page-size="pageSize"
         :disabled="loading"
+        :current-page.sync="page"
         @current-change="onCurrentChange"
         />
       <!-- /列表分页 -->
@@ -162,7 +164,8 @@
 <script>
 import {
   getArticles,
-  getArticleChannels
+  getArticleChannels,
+  deleteArticle
 } from '@/api/article'
 
 export default {
@@ -195,7 +198,8 @@ export default {
       channels: [], // 文章频道列表
       channelId: null, // 查询文章频道
       rangeDate: null, // 筛选的范围日期
-      loading: true // 表单数据加载中 loading
+      loading: true, // 表单数据加载中 loading
+      page: 1 // 当前页码
     }
   },
   computed: {},
@@ -237,6 +241,26 @@ export default {
     loadChannels () {
       getArticleChannels().then(res => {
         this.channels = res.data.data.channels
+      })
+    },
+
+    onDeleteArticle (articleId) {
+      console.log(articleId)
+      console.log(articleId.toString())
+      this.$confirm('确认删除吗？', '删除提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteArticle(articleId.toString()).then(res => {
+          // 删除成功,更新当前页的文章数据列表
+          this.loadArticles(this.page)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   }

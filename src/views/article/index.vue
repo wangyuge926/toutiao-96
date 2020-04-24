@@ -80,13 +80,16 @@
           prop="date"
           label="封面">
           <template slot-scope="scope">
-            <img
-            v-if="scope.row.cover.images[0]"
-            class="article-cover"
-            :src="scope.row.cover.images[0]" alt="">
-            <img
-            v-else class="article-cover"
-            src="./no-cover.gif" alt="">
+            <el-image
+            style="width: 100px; height: 100px"
+            :src="scope.row.cover.images[0]"
+            fit="cover"
+            lazy
+          >
+            <div slot="placeholder" class="image-slot">
+              加载中<span class="dot">...</span>
+            </div>
+            </el-image>
           </template>
         </el-table-column>
         <el-table-column
@@ -232,8 +235,4 @@ export default {
   margin-bottom: 20px;
 }
 
-.article-cover {
-  width: 100px;
-  background-size: cover;
-}
 </style>

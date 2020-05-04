@@ -25,6 +25,9 @@
 
             <h2>地图图表示例</h2>
             <map-demo />
+
+            <h2>纯粹的百度地图示例</h2>
+            <bmap-demo/>
          </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -34,10 +37,13 @@
 <script>
 import echarts from 'echarts'
 import MapDemo from './components/map-demo'
+import BmapDemo from './components/bmap-demo'
+
 export default {
   name: 'FansIndex',
   components: {
-    MapDemo
+    MapDemo, // 百度地图结合 echarts
+    BmapDemo // 纯粹的百度地图
   },
   props: {},
   data () {

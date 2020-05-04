@@ -13,7 +13,7 @@ import echarts from 'echarts'
 import 'echarts/dist/extension/bmap'
 
 export default {
-  name: 'MppDemo',
+  name: 'MapDemo',
   components: {},
   props: {},
   data () {

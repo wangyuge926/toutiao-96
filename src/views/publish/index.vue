@@ -34,6 +34,38 @@
             <el-radio :label="0">无图</el-radio>
             <el-radio :label="-1">自动</el-radio>
           </el-radio-group>
+          <!--
+            我们需要把选择的封面图片的地址放到 article.cover.images 数组中
+
+            当你给事件处理函数传递了自定义参数以后，就无法得到原本的那个数据参数了。
+
+            如果想要在事件处理函数自定义传参以后还想得到原来的那个事件本身的参数，则手动指定 $event，它就代表那个事件本身的参数
+
+            在组件上使用 v-model
+
+            当你给子组件提供的数据既要使用还要修改，这个时候我们可以使用 v-model 简化数据绑定。
+            v-model="article.cover.images[index]"
+              给子组件传递了一个名字叫 value 的数据
+              :value="article.cover.images[index]"
+              默认监听 input 事件，当事件发生，它会让绑定数据 = 事件参数
+              @input="article.cover.images[index] = 事件参数"
+
+            注意：v-model 仅仅是简写了而已，本质还在在父子组件通信
+
+           -->
+          <template v-if="article.cover.type > 0">
+            <upload-cover
+              :key="cover"
+              v-for="(cover, index) in article.cover.type"
+              v-model="article.cover.images[index]"
+            />
+            <!-- <upload-cover
+              :key="cover"
+               v-for="(cover, index) in article.cover.type"
+              :cover-image="article.cover.images[index]"
+              @update-cover="onUpdateCover(index, $event)"
+            /> -->
+          </template>
         </el-form-item>
         <el-form-item label="频道" prop="channel_id">
           <el-select v-model="article.channel_id" placeholder="请选择频道">
@@ -55,6 +87,7 @@
 </template>
 
 <script>
+import UploadCover from './components/upload-cover'
 import {
   getArticleChannels,
   addArticle,
@@ -89,7 +122,8 @@ import { uploadImage } from '@/api/image'
 export default {
   name: 'PublishIndex',
   components: {
-    'el-tiptap': ElementTiptap
+    'el-tiptap': ElementTiptap,
+    UploadCover
   },
   props: {},
   data () {
@@ -99,7 +133,7 @@ export default {
         title: '', // 文章标题
         content: '', // 文章内容
         cover: { // 文章封面
-          type: 0, // 封面类型 -1:自动，0-无图，1-1张，3-3张
+          type: 1, // 封面类型 -1:自动，0-无图，1-1张，3-3张
           images: [] // 封面图片的地址
         },
         channel_id: null
@@ -222,6 +256,10 @@ export default {
       getArticle(this.$route.query.id).then(res => {
         this.article = res.data.data
       })
+    },
+
+    onUpdateCover (index, url) {
+      this.article.cover.images[index] = url
     }
   }
 }

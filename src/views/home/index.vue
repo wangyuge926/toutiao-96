@@ -1,5 +1,7 @@
 <template>
-    <div class="home-container">首页</div>
+    <div class="home-container">
+      <img class="pic" src="./wybxz.jpg" alt="">
+    </div>
 </template>
 
 <script>
@@ -19,4 +21,9 @@ export default {
 }
 </script>
 
-<style scoped lang="less" ></style>
+<style scoped lang="less" >
+.pic {
+  width: 100%;
+  height: 100%;
+}
+</style>
